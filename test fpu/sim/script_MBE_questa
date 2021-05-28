@@ -1,0 +1,30 @@
+INSTALL_DIR=/software/mentor/questa10.7c/questasim/linux_x86_64
+export PATH=$INSTALL_DIR:$PATH
+export LM_LICENSE_FILE=${LM_LICENSE_FILE}:1717@led-x3850-3.polito.it
+echo "You can run vsim"
+
+vlib work
+
+vcom -reportprogress 300 -work work ../src/MBE/ha.vhd
+vcom -reportprogress 300 -work work ../src/MBE/fa.vhd
+vcom -reportprogress 300 -work work ../src/MBE/par_prod_gen.vhd
+vcom -reportprogress 300 -work work ../src/MBE/dadda_tree.vhd
+vcom -reportprogress 300 -work work ../src/MBE/MBE.vhd
+
+vcom -reportprogress 300 -work work ../src/common/fpnormalize_fpnormalize.vhd
+vcom -reportprogress 300 -work work ../src/common/fpround_fpround.vhd
+vcom -reportprogress 300 -work work ../src/common/packfp_packfp.vhd
+vcom -reportprogress 300 -work work ../src/common/unpackfp_unpackfp.vhd
+
+vcom -reportprogress 300 -work work ../src/multiplier/reg.vhd
+vcom -reportprogress 300 -work work ../src/multiplier/reg_bit.vhd
+vcom -reportprogress 300 -work work ../src/multiplier/fpmul_stage1_struct.vhd
+vcom -reportprogress 300 -work work ../src/multiplier/fpmul_stage2_struct.vhd
+vcom -reportprogress 300 -work work ../src/multiplier/fpmul_stage3_struct.vhd
+vcom -reportprogress 300 -work work ../src/multiplier/fpmul_stage4_struct.vhd
+vcom -reportprogress 300 -work work ../src/multiplier/fpmul_pipeline.vhd
+
+
+vlog -sv ../tb/top.sv
+vsim top
+run 4 us

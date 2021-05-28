@@ -1,0 +1,16 @@
+INSTALL_DIR=/software/mentor/questa10.7c/questasim/linux_x86_64
+export PATH=$INSTALL_DIR:$PATH
+export LM_LICENSE_FILE=${LM_LICENSE_FILE}:1717@led-x3850-3.polito.it
+echo "You can run vsim"
+
+vlib work
+
+vcom -reportprogress 300 -work work ../src/ha.vhd
+vcom -reportprogress 300 -work work ../src/fa.vhd
+vcom -reportprogress 300 -work work ../src/par_prod_gen.vhd
+vcom -reportprogress 300 -work work ../src/dadda_tree.vhd
+vcom -reportprogress 300 -work work ../src/MBE.vhd
+
+vlog -sv ../tb/top.sv
+vsim top
+run 4 us
